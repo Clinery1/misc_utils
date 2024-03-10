@@ -32,13 +32,13 @@ impl<K: Key, T> KeyedVec<K, T> {
     }
 
     pub fn get(&self, key: K)->&T {
-        let id = key.get_id();
+        let id = key.id();
         assert!(id < self.inner.len());
         return &self.inner[id];
     }
 
     pub fn get_mut(&mut self, key: K)->&mut T {
-        let id = key.get_id();
+        let id = key.id();
         assert!(id < self.inner.len());
         return &mut self.inner[id];
     }

@@ -1,6 +1,10 @@
 use serde::{Serialize, Deserialize};
 use std::{
-    ops::Add,
+    ops::{
+        Add,
+        Range,
+        RangeInclusive,
+    },
     cmp::Ordering,
 };
 
@@ -22,9 +26,9 @@ macro_rules! define_keys {
             #[repr(transparent)]
             #[derive(Debug, PartialEq, Eq, Hash, Copy, Clone)]
             pub struct $name(pub usize);
-            impl $crate::utils::Key for $name {
+            impl $crate::Key for $name {
                 fn from_id(id: usize)->Self {$name(id)}
-                fn get_id(&self)->usize {self.0}
+                fn id(&self)->usize {self.0}
             }
             impl $name {
                 pub fn invalid()->Self {Self(usize::MAX)}
@@ -36,22 +40,38 @@ macro_rules! define_keys {
 
 pub trait Key {
     fn from_id(id: usize)->Self;
-    fn get_id(&self)->usize;
+    fn id(&self)->usize;
 }
 // could be useful, but probably not.
 impl Key for usize {
     fn from_id(id: usize)->Self {id}
-    fn get_id(&self)->usize {*self}
+    fn id(&self)->usize {*self}
 }
 
 
-/// A range. Basically [`Range`](std::ops::Range), but impements [`Copy`] and only uses [`usize`]
+/// A range. Basically [`Range`], but impements [`Copy`] and only uses [`usize`]
 #[derive(Copy, Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct Span {
     /// Inclusive
     pub start: usize,
     /// Exclusive
     pub end: usize,
+}
+impl From<Range<usize>> for Span {
+    fn from(r: Range<usize>)->Self {
+        Span {
+            start: r.start,
+            end: r.end,
+        }
+    }
+}
+impl From<RangeInclusive<usize>> for Span {
+    fn from(r: RangeInclusive<usize>)->Self {
+        Span {
+            start: *r.start(),
+            end: r.end() + 1,
+        }
+    }
 }
 impl Span {
     pub fn contains(&self, i: usize)->bool {

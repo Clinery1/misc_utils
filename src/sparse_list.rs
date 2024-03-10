@@ -92,12 +92,12 @@ impl<K: Key, T> SparseList<K, T> {
 impl<K: Key, T> Index<K> for SparseList<K, T> {
     type Output = Option<T>;
     fn index(&self, index: K)->&Self::Output {
-        &self.inner[index.get_id()]
+        &self.inner[index.id()]
     }
 }
 impl<K: Key, T> IndexMut<K> for SparseList<K, T> {
     fn index_mut(&mut self, index: K)->&mut Self::Output {
-        &mut self.inner[index.get_id()]
+        &mut self.inner[index.id()]
     }
 }
 impl<K: Key, T> IntoIterator for SparseList<K, T> {
