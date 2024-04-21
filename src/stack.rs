@@ -26,29 +26,30 @@ impl<T> Stack<T> {
     }
 
     /// Pops the last item or panics if there are no items
-    pub fn pop(&mut self)->T {
-        self.0.pop().expect("Attempt to pop an empty stack")
+    pub fn pop(&mut self)->Option<T> {
+        self.0.pop()
     }
 
     /// Gets a reference to the last item or panics if there are none
-    pub fn last(&self)->&T {
-        self.0.last().expect("Empty stack")
+    pub fn last(&self)->Option<&T> {
+        self.0.last()
     }
 
     /// Gets a mutable reference to the last item or panics if there are none
-    pub fn last_mut(&mut self)->&mut T {
-        self.0.last_mut().expect("Empty stack")
+    pub fn last_mut(&mut self)->Option<&mut T> {
+        self.0.last_mut()
     }
 }
 impl<T> Index<usize> for Stack<T> {
     type Output = T;
     fn index(&self, index: usize)->&T {
-        &self.0[self.0.len().saturating_sub(index)]
+        let index = self.0.len().saturating_sub(index + 1);
+        &self.0[index]
     }
 }
 impl<T> IndexMut<usize> for Stack<T> {
     fn index_mut(&mut self, index: usize)->&mut T {
-        let index = self.0.len().saturating_sub(index);
+        let index = self.0.len().saturating_sub(index + 1);
         &mut self.0[index]
     }
 }

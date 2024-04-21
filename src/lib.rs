@@ -8,6 +8,11 @@ use std::{
     cmp::Ordering,
 };
 
+pub use sparse_list::SparseList;
+pub use keyed_vec::KeyedVec;
+pub use slotmap::SlotMap;
+pub use stack::Stack;
+
 
 pub mod sparse_list;
 pub mod keyed_vec;
