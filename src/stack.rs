@@ -39,6 +39,16 @@ impl<T> Stack<T> {
     pub fn last_mut(&mut self)->Option<&mut T> {
         self.0.last_mut()
     }
+
+    /// Iterate from the top of the stack to the bottom.
+    pub fn iter<'a>(&'a self)->impl 'a + Iterator<Item = &'a T> {
+        self.0.iter().rev()
+    }
+
+    /// Iterate from the top of the stack to the bottom, mutably.
+    pub fn iter_mut<'a>(&'a mut self)->impl 'a + Iterator<Item = &'a mut T> {
+        self.0.iter_mut().rev()
+    }
 }
 impl<T> Index<usize> for Stack<T> {
     type Output = T;
