@@ -49,6 +49,8 @@ impl<T> Stack<T> {
     pub fn iter_mut<'a>(&'a mut self)->impl 'a + Iterator<Item = &'a mut T> {
         self.0.iter_mut().rev()
     }
+
+    pub fn len(&self)->usize {self.0.len()}
 }
 impl<T> Index<usize> for Stack<T> {
     type Output = T;
