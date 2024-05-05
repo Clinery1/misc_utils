@@ -138,6 +138,14 @@ impl<K: Key, T> SlotMap<K, T> {
         let id = key.id();
         return self.inner[id].take();
     }
+
+    pub fn key_of_last_item(&self)->Option<K> {
+        if self.inner.is_empty() {
+            None
+        } else {
+            Some(K::from_id(self.inner.len() - 1))
+        }
+    }
 }
 impl<K: Key, T> Index<K> for SlotMap<K, T> {
     type Output = T;
