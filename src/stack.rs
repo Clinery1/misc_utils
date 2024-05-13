@@ -15,6 +15,11 @@ impl<T> Stack<T> {
         Stack(Vec::with_capacity(4))
     }
 
+    /// Clears the stack
+    pub fn clear(&mut self) {
+        self.0.clear();
+    }
+
     /// Creates a new stack with at least `capacity` empty slots
     pub fn with_capacity(capacity: usize)->Self {
         Stack(Vec::with_capacity(capacity.max(4)))
