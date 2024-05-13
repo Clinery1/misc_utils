@@ -1,7 +1,11 @@
 use serde::{Serialize, Deserialize};
-use std::ops::{
-    Index,
-    IndexMut,
+use std::{
+    ops::{
+        Index,
+        IndexMut,
+        RangeBounds,
+    },
+    vec::Drain,
 };
 
 
@@ -18,6 +22,10 @@ impl<T> Stack<T> {
     /// Clears the stack
     pub fn clear(&mut self) {
         self.0.clear();
+    }
+
+    pub fn drain<R: RangeBounds<usize>>(&mut self, range: R)->Drain<T> {
+        self.0.drain(range)
     }
 
     /// Creates a new stack with at least `capacity` empty slots
