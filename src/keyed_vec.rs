@@ -42,6 +42,10 @@ impl<K: Key, T> KeyedVec<K, T> {
         assert!(id < self.inner.len());
         return &mut self.inner[id];
     }
+
+    pub fn len(&self)->usize {
+        self.inner.len()
+    }
 }
 impl<K: Key, T> Index<K> for KeyedVec<K, T> {
     type Output = T;
